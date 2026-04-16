@@ -35,3 +35,16 @@ def test_personaje_recibe_dano():
 
     # Assert
     assert heroe.hp == 800
+
+
+def test_personaje_muere_si_hp_llega_a_cero():
+    # Arrange
+    heroe = Personaje()
+    enemigo = Personaje()
+
+    # Act - daño mayor que la vida del héroe
+    enemigo.atacar(heroe, dano=1500)
+
+    # Assert - HP no puede quedar en negativo
+    assert heroe.hp == 0
+    assert heroe.esta_vivo == False
