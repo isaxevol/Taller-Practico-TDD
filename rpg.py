@@ -7,3 +7,6 @@ class Personaje:
         self.hp = 1000
         self.nivel = 1
         self.esta_vivo = True
+
+    def atacar(self, objetivo, dano):
+        objetivo.hp -= dano
