@@ -48,3 +48,53 @@ def test_personaje_muere_si_hp_llega_a_cero():
     # Assert - HP no puede quedar en negativo
     assert heroe.hp == 0
     assert heroe.esta_vivo == False
+
+
+# =============================================================
+# BASE 3: Magia blanca (reto autónomo)
+# Regla 4: Un personaje puede curar a otro (solo si está vivo).
+# Regla 5: La curación no puede superar los 1000 HP máximos.
+# =============================================================
+
+def test_curar_personaje():
+    # Arrange - héroe herido (800 HP)
+    heroe = Personaje()
+    heroe.hp = 800
+
+    sanador = Personaje()
+
+    # Act - curar 100 HP
+    sanador.curar(heroe, cantidad=100)
+
+    # Assert - debe tener 900 HP
+    assert heroe.hp == 900
+
+
+def test_no_curar_mas_del_maximo():
+    # Arrange - héroe con 900 HP
+    heroe = Personaje()
+    heroe.hp = 900
+
+    sanador = Personaje()
+
+    # Act - intentar curar 200 HP (superaría el máximo)
+    sanador.curar(heroe, cantidad=200)
+
+    # Assert - no puede pasar de 1000 HP
+    assert heroe.hp == 1000
+
+
+def test_los_muertos_no_se_curan():
+    # Arrange - héroe muerto
+    heroe = Personaje()
+    heroe.hp = 0
+    heroe.esta_vivo = False
+
+    sanador = Personaje()
+
+    # Act - intentar curar a un personaje muerto
+    sanador.curar(heroe, cantidad=500)
+
+    # Assert - los atributos deben mantenerse intactos
+    assert heroe.hp == 0
+    assert heroe.esta_vivo == False
